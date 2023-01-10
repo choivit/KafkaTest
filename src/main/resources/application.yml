@@ -2,10 +2,19 @@ spring:
   kafka:
     bootstrap-servers: 127.0.0.1:9092
     consumer:
+#      consumer 서버가 별도로 있다면 설정
+#      bootstrap-servers: localhost:9092
       group-id: choi
+#      kafka 서버에 초기 offset이 없거나 서버에 현재 offset이 더 이상 없는 경우 수행할 작업을 작성
+#      latest: 가장 최근에 생산된 메세지로 offset reset
+#      earliest: 가장 오래된 메시지로 offset reset
+#      none: offset 정보가 없으면 Exception 발생
       auto-offset-reset: earliest
+#      문자열데이터: StringDeserialezer, Json데이터: JsonDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
