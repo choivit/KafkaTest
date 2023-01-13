@@ -1,15 +1,16 @@
-package com.example.kafkagroovy.kafkaTest;
+package com.example.kafkagroovy.kafkaTest.kafkaBasic;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service
+//@Service
 public class KafkaConsumer {
 
-    @KafkaListener(topics = "choi", groupId = "choi")
-    public void consume(String message) throws IOException {
+    @KafkaListener(topics = "choi2", groupId = "consumerGroup")
+    public void consumer(String message) throws IOException {
         System.out.println(String.format("Consumed message : %s", message));
+
     }
 }

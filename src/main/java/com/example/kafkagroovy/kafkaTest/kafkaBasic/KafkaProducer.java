@@ -1,12 +1,12 @@
-package com.example.kafkagroovy.kafkaTest;
+package com.example.kafkagroovy.kafkaTest.kafkaBasic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class KafkaProducer {
-    private static final String TOPIC = "choi";
+    private static final String TOPIC = "choi2";
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
