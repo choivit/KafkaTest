@@ -1,17 +1,14 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPatitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.controller;
 
+import com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.TestEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -22,17 +19,22 @@ public class ProducerController {
     // 메세지는 POST로 받아서 kafka로 전달.
     private final KafkaTemplate<String, Object> kafkaProducerTemplate;
 
+    @Value("${kafka.topic-with-key}")
+    public String TOPIC_WITH_KEY;
+
     public ProducerController(KafkaTemplate<String, Object> kafkaProducerTemplate) {
         this.kafkaProducerTemplate = kafkaProducerTemplate;
     }
 
-    @PostMapping("/produce")
+    @PostMapping("produce")
     public ResponseEntity<?> produceMessage(@RequestBody TestEntity testEntity){
-        testEntity.setTime(LocalDateTime.now());
+        System.out.println("produceMessage start !");
+        log.info("testEntity={}", testEntity);
 
         // kafkaProducerTemplate.send를 통해 메세지 전송. 이때 토픽을 지정하고 메세지를 전송.
         // ListenableFuture를 통하여 전송 결과 확인 가능.
         ListenableFuture<SendResult<String, Object>> future = kafkaProducerTemplate.send(testEntity.getTopicName(), testEntity);
+        System.out.println("produceMessage good !");
 
         // 메세지 처리는 비동기로 처리하기 때문에 callback 지정.
         // Future 혹은 Callback 선택 가능.
@@ -45,6 +47,28 @@ public class ProducerController {
             @Override
             public void onSuccess(SendResult<String, Object> result) {
                 log.info("Send message with offset: {}, partition: {}", result.getRecordMetadata().offset(), result.getRecordMetadata().partition());
+            }
+        });
+
+        return ResponseEntity.ok(testEntity);
+    }
+
+    @PostMapping("produce-with-key/{key}")
+    public ResponseEntity<?> produceMessageWithKey(@PathVariable("key") String key, @RequestBody TestEntity testEntity){
+
+        log.info("key = {}, testEntity = {}", key, testEntity);
+        // 키를 함께 전달하여 키에 의한 파티셔닝을 수행하도록 전달.
+        ListenableFuture<SendResult<String, Object>> future = kafkaProducerTemplate.send(TOPIC_WITH_KEY, key, testEntity);
+
+        future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
+            @Override
+            public void onFailure(Throwable ex) {
+                log.error("메세지를 보낼 수 없습니다: {}", ex.getMessage());
+            }
+
+            @Override
+            public void onSuccess(SendResult<String, Object> result) {
+                log.info("키와 함께 보낸 메세지: {}, offset: {}, partition: {}", key, result.getRecordMetadata().offset(), result.getRecordMetadata().partition());
             }
         });
 

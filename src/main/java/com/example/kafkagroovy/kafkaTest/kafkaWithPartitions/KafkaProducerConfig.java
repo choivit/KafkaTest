@@ -1,7 +1,6 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPatitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import org.apache.kafka.clients.producer.KafkaProducer;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,13 +9,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Configuration
 public class KafkaProducerConfig {
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
 
     //Producer는 ProducerFactory를 이용. 메세지를 전송하기 위해서는 KafkaProducerTemplate를 이용.
@@ -26,6 +27,7 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer); // kafka broker의 엔드포인트
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        log.info("header info = {}", configProps);
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

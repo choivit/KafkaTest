@@ -1,4 +1,4 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPatitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Configuration
 public class KafkaAdminConfig {
-    @Value("${kafka.bootstrap-servers}")
+    @Value("${spring.kafka.bootstrap-servers}")
     private  String bootstrapServers;
 
     @Bean

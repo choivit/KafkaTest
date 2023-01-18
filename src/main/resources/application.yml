@@ -13,11 +13,32 @@ spring:
 #      문자열데이터: StringDeserialezer, Json데이터: JsonDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring:
+#          deserializer:
+#            value:
+#              delegate:
+#                class: org.springframework.kafka.support.serializer.JsonDeserializer
+#          json:
+#            value:
+#              default:
+#                type: com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.TestEntity
+#              trusted:
+#                package: com.example.kafkagroovy.kafkaTest.kafkaWithPartitions
+
     producer:
 #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#    json:
+#        use:
+#            type:
+#                headers: false
+
 # 토픽 키를 이용
 kafka:
-  topic-with-key: topic-key
+  topic-with-key: choi10
