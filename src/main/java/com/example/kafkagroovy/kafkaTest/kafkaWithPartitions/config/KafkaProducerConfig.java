@@ -1,4 +1,4 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;

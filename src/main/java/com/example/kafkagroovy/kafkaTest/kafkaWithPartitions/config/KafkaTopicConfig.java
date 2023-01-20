@@ -1,4 +1,4 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -10,29 +10,29 @@ import org.springframework.kafka.core.KafkaAdmin;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class KafkaTopicConfig {
 
     public final static String DEFAULT_TOPIC = "key1";
 
     // 키를 지정해주는 부분
-    @Value("${kafka.topic-with-key}")
-    public String TOPIC_WITH_KEY;
+//    @Value("${kafka.topic-with-key}")
+//    public String TOPIC_WITH_KEY;
 
     private final KafkaAdmin kafkaAdmin;
 
     private NewTopic defaultTopic(){
         return TopicBuilder.name(DEFAULT_TOPIC)
                 .partitions(2)
-                .replicas(2)
+                .replicas(1)
                 .build();
     }
 
     private  NewTopic topicWithKey(){
-        return  TopicBuilder.name(TOPIC_WITH_KEY)
+        return  TopicBuilder.name(DEFAULT_TOPIC)
                 .partitions(2)
-//                .replicas(2)
+                .replicas(1)
                 .build();
     }
 

@@ -1,11 +1,14 @@
 package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
 
+import com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.controller.KafkaTopicController;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class MessageListener {
 
     // topic, groupid, contatinerFactory 를 파라미터로 지정하기.
@@ -21,9 +24,11 @@ public class MessageListener {
     // 메세지를 수신하면 단순하게 로깅하는 코드.
     // topic 값은 있는 그대로를 읽도록 spel을 지원.
     // contatinerFactory는 기본 프로그램에서 생성한 컨테이너 팩토리 그대로 지정.
-    @KafkaListener(topics = "${kafka.topic-with-key}", containerFactory = "defaultKafkaListenerContainerFactory")
-    public void listenTopicWithKey(Object record) {
+
+    @KafkaListener(topics = "newTopic", containerFactory = "defaultKafkaListenerContainerFactory")
+    public void listenTopicWithKey(TestEntity testEntity) {
         // 메세지를 수신하면 토픽 이름과 레코드를 콘솔로 출력.
-        log.info("receive Message form {}, values {} with key", record);
+
+        log.info("receive Message form {}, values {} with key", testEntity);
     }
 }

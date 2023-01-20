@@ -13,5 +13,6 @@ public class TestEntity {
     private String title;
     private String contents;
     private String topicName;
+    private String dateTime;
 
 }

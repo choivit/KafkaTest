@@ -19,7 +19,7 @@ public class ProducerController {
     // 메세지는 POST로 받아서 kafka로 전달.
     private final KafkaTemplate<String, Object> kafkaProducerTemplate;
 
-    @Value("${kafka.topic-with-key}")
+//    @Value("${kafka.topic-with-key}")
     public String TOPIC_WITH_KEY;
 
     public ProducerController(KafkaTemplate<String, Object> kafkaProducerTemplate) {

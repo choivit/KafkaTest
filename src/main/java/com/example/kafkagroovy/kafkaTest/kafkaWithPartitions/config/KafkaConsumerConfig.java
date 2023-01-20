@@ -1,4 +1,4 @@
-package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions;
+package com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
