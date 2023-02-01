@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class KafkaTopicConfig {
 
-    public final static String DEFAULT_TOPIC = "key1";
+    public final static String DEFAULT_TOPIC = "choi0130";
 
     // 키를 지정해주는 부분
 //    @Value("${kafka.topic-with-key}")
@@ -32,7 +32,7 @@ public class KafkaTopicConfig {
     private  NewTopic topicWithKey(){
         return  TopicBuilder.name(DEFAULT_TOPIC)
                 .partitions(2)
-                .replicas(1)
+//                .replicas(1)
                 .build();
     }
 

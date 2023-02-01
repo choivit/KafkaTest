@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: localhost:19092, localhost:29092
+    bootstrap-servers: localhost:9092
     consumer:
 #      consumer 서버가 별도로 있다면 설정
 #      bootstrap-servers: localhost:9092
@@ -40,5 +40,5 @@ spring:
 #                headers: false
 
 # 토픽 키를 이용
-#kafka:
-#  topic-with-key: choi
+kafka:
+  topic-with-key: choi0130

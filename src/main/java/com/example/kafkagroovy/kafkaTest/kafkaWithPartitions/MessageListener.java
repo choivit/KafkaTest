@@ -25,7 +25,7 @@ public class MessageListener {
     // topic 값은 있는 그대로를 읽도록 spel을 지원.
     // contatinerFactory는 기본 프로그램에서 생성한 컨테이너 팩토리 그대로 지정.
 
-    @KafkaListener(topics = "newTopic", containerFactory = "defaultKafkaListenerContainerFactory")
+    @KafkaListener(topics = "choi0130", containerFactory = "defaultKafkaListenerContainerFactory")
     public void listenTopicWithKey(TestEntity testEntity) {
         // 메세지를 수신하면 토픽 이름과 레코드를 콘솔로 출력.
 

@@ -28,6 +28,11 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         log.info("header info = {}", configProps);
+        System.out.println("여기는 producerFactory 파티셔닝 설정 전 >> ");
+
+        // 커스텀 파티셔닝 클래스 적용
+        configProps.put("partitioner.class", "com.example.kafkagroovy.kafkaTest.kafkaWithPartitions.config.CustomPartitioner");
+        System.out.println("여기는 producerFactory 파티셔닝 설정 후 >> ");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

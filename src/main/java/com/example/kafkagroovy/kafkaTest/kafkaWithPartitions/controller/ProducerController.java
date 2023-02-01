@@ -57,8 +57,13 @@ public class ProducerController {
     public ResponseEntity<?> produceMessageWithKey(@PathVariable("key") String key, @RequestBody TestEntity testEntity){
 
         log.info("key = {}, testEntity = {}", key, testEntity);
+        System.out.println("변환되는 건가 ? : " + key);
+//        String strKey = String.valueOf(key);
+
+//        System.out.println("전달되게 변환은 된건가? : " + strKey);
         // 키를 함께 전달하여 키에 의한 파티셔닝을 수행하도록 전달.
-        ListenableFuture<SendResult<String, Object>> future = kafkaProducerTemplate.send(TOPIC_WITH_KEY, key, testEntity);
+        ListenableFuture<SendResult<String, Object>> future = kafkaProducerTemplate.send(testEntity.getTopicName(), key, testEntity);
+        System.out.println("이미 지난건가? : " + key);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, Object>>() {
             @Override
